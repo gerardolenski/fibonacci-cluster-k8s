@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-svc
+  namespace: fibonacci
+spec:
+  type: NodePort
+  selector:
+    app: pgadmin
+  ports:
+  - port: 8080
+    targetPort: 80
+    nodePort: 31000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+  namespace: fibonacci
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      volumes:
+        - name: pgadmin-storage
+          persistentVolumeClaim:
+              claimName: pgadmin-pvc
+      containers:
+      - name: pgadmin
+        image: dpage/pgadmin4:4.25
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "0.5"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /var/lib/pgadmin
+            name: pgadmin-storage
+            subPath: postgres
+        env:
+          - name: PGADMIN_DEFAULT_EMAIL
+            value: postgres
+          - name: PGADMIN_DEFAULT_PASSWORD
+            value: qwerty
+            # valueFrom:
+            #     secretKeyRef:
+            #       name: fib-secret
+            #       key: PGADMIN_PASSWORD
