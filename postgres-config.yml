@@ -35,7 +35,6 @@ spec:
         resources:
           limits:
             memory: "2Gi"
-            cpu: "2"
         ports:
         - containerPort: 5432
         volumeMounts:

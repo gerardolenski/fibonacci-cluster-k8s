@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker-svc
+  namespace: fibonacci
+spec:
+  selector:
+    app: worker
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: fibonacci
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - name: worker
+        image: golenski/fibonacci-worker:1.0
+        resources:
+          limits:
+            memory: "300Mi"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: BROKER_URL
+            value: failover:(tcp://amq-svc:61616)?jms.useAsyncSend=true&initialReconnectDelay=1000
+          - name: BROKER_USER
+            value: admin
+          - name: BROKER_PASSWORD
+            valueFrom:
+                secretKeyRef:
+                  name: fib-secret
+                  key: AMQ_PASSWORD
+          - name: WORKER_QUEUE_NAME
+            value: worker
+          - name: WORKER_CONCURRENCY
+            value: 1-1
+          - name: LOGGING_LEVEL
+            value: debug
+          - name: JVM_OPTS
+            value: -Xms256m -Xmx256m

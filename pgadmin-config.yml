@@ -37,7 +37,6 @@ spec:
         resources:
           limits:
             memory: "2Gi"
-            cpu: "1"
         ports:
         - containerPort: 80
         volumeMounts:
@@ -48,8 +47,7 @@ spec:
           - name: PGADMIN_DEFAULT_EMAIL
             value: postgres
           - name: PGADMIN_DEFAULT_PASSWORD
-            value: qwerty
-            # valueFrom:
-            #     secretKeyRef:
-            #       name: fib-secret
-            #       key: PGADMIN_PASSWORD
+            valueFrom:
+                secretKeyRef:
+                  name: fib-secret
+                  key: PGADMIN_PASSWORD

@@ -16,3 +16,10 @@ spec:
               name: front-svc
               port:
                 number: 8080
+        - path: /api/?(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: manager-svc
+              port:
+                number: 8080
