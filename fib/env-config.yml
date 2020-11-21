@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-env
+  namespace: fibonacci
+data:
+  POSTGRES_USER: postgres
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: amq-env
+  namespace: fibonacci
+data:
+  BROKER_URL: failover:(tcp://amq-svc:61616)?jms.useAsyncSend=true&initialReconnectDelay=1000
+  BROKER_USER: admin
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manager-env
+  namespace: fibonacci
+data:
+  WORKER_QUEUE_NAME: worker
+  RESULT_LISTENER_CONCURRENCY: 1-2
+  POSTGRES_DATASOURCE_URL: jdbc:postgresql://postgres-svc:5432/task_manager
+  POSTGRESS_POOL_SIZE: '3'
+  POSTGRESS_CONNECTION_TIMEOUT: '10000'
+  FIB_ALGORITHMS: ITERATIVE,RECURSIVE,BINETS,EXPONENTIAL
+  LOGGING_LEVEL: debug
+  JVM_OPTS: -Xms512m -Xmx512m
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: worker-env
+  namespace: fibonacci
+data:
+  WORKER_QUEUE_NAME: worker
+  WORKER_CONCURRENCY: 1-1
+  LOGGING_LEVEL: debug
+  JVM_OPTS: -Xms256m -Xmx256m

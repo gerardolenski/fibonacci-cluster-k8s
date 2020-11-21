@@ -34,20 +34,13 @@ spec:
         ports:
         - containerPort: 8080
         env:
-          - name: BROKER_URL
-            value: failover:(tcp://amq-svc:61616)?jms.useAsyncSend=true&initialReconnectDelay=1000
-          - name: BROKER_USER
-            value: admin
           - name: BROKER_PASSWORD
             valueFrom:
                 secretKeyRef:
                   name: fib-secret
                   key: AMQ_PASSWORD
-          - name: WORKER_QUEUE_NAME
-            value: worker
-          - name: WORKER_CONCURRENCY
-            value: 1-1
-          - name: LOGGING_LEVEL
-            value: debug
-          - name: JVM_OPTS
-            value: -Xms256m -Xmx256m
+        envFrom:
+          - configMapRef:
+              name: amq-env
+          - configMapRef:
+              name: worker-env

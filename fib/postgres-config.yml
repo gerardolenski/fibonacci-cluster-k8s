@@ -43,10 +43,11 @@ spec:
             # postgres needs sub-directory
             subPath: postgres
         env:
-          - name: POSTGRES_USER
-            value: postgres
           - name: POSTGRES_PASSWORD
             valueFrom:
                 secretKeyRef:
                   name: fib-secret
                   key: PG_PASSWORD
+        envFrom:
+          - configMapRef:
+              name: postgres-env
