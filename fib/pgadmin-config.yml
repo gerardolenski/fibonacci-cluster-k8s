@@ -43,11 +43,8 @@ spec:
           - mountPath: /var/lib/pgadmin
             name: pgadmin-storage
             subPath: postgres
-        env:
-          - name: PGADMIN_DEFAULT_EMAIL
-            value: postgres
-          - name: PGADMIN_DEFAULT_PASSWORD
-            valueFrom:
-                secretKeyRef:
-                  name: fib-secret
-                  key: PGADMIN_PASSWORD
+        envFrom:
+          - secretRef:
+              name: pgadmin-secret
+          - configMapRef:
+              name: pgadmin-env

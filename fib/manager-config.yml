@@ -33,18 +33,11 @@ spec:
             memory: "700Mi"
         ports:
         - containerPort: 8080
-        env:
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-                secretKeyRef:
-                  name: fib-secret
-                  key: PG_PASSWORD
-          - name: BROKER_PASSWORD  
-            valueFrom:
-                secretKeyRef:
-                  name: fib-secret
-                  key: AMQ_PASSWORD
         envFrom:
+        - secretRef:
+            name: postgres-secret
+        - secretRef:
+            name: amq-secret
         - configMapRef:
             name: postgres-env
         - configMapRef:

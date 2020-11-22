@@ -40,3 +40,11 @@ data:
   WORKER_CONCURRENCY: 1-1
   LOGGING_LEVEL: debug
   JVM_OPTS: -Xms256m -Xmx256m
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-env
+  namespace: fibonacci
+data:
+  PGADMIN_DEFAULT_EMAIL: postgres

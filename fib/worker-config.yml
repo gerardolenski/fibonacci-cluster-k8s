@@ -33,13 +33,9 @@ spec:
             memory: "300Mi"
         ports:
         - containerPort: 8080
-        env:
-          - name: BROKER_PASSWORD
-            valueFrom:
-                secretKeyRef:
-                  name: fib-secret
-                  key: AMQ_PASSWORD
         envFrom:
+          - secretRef:
+              name: amq-secret
           - configMapRef:
               name: amq-env
           - configMapRef:
