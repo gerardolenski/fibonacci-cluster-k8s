@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: manager
-        image: golenski/fibonacci-task-manager:1.0
+        image: golenski/fibonacci-task-manager:1.1
         resources:
           limits:
             memory: "700Mi"
@@ -44,3 +44,19 @@ spec:
             name: amq-env
         - configMapRef:
             name: manager-env
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+          periodSeconds: 5
+          failureThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+          periodSeconds: 5
+          failureThreshold: 3
