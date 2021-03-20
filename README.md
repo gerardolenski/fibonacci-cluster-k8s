@@ -50,3 +50,61 @@ $ minikube ip
 - `http://192.168.70.2` - the Fibonacci app
 - `http://192.168.70.2:31000` - the PG admin portal (user: postgres, password: qwerty)
 - `http://192.168.70.2:31001` - the Active MQ console (user: admin, password:admin)
+
+## Running on microk8s
+
+0. The microk8s was installed using snap
+```
+$ snap info microk8s
+$ sudo snap install microk8s --classic --channel=1.20/stable
+$ sudo usermod -a -G microk8s $USER
+```
+
+1. Start microk8s
+```
+$ mickrok8s start
+```
+
+2. We need to enable several addons
+```
+$ microk8s enable ingress
+$ microk8s enable storage
+$ microk8s enable dns
+$ microk8s enable host-access
+```
+
+3. Deploy all objects located in `fib` directory to k8s cluster ()
+```
+$ microk8s kubectl apply -f fib/
+```
+
+4. Create postgres database (only once)
+   
+During first start, the manager pods will get error because database does not exist. To fix this error, run this command once (the postgres pod must be available):
+```
+microk8s kubectl -n fibonacci exec \
+  $(microk8s kubectl -n fibonacci get pod | grep postgres | sed -e 's/\s.*$//') \
+  --container=postgres -- sh -c 'psql -U "$POSTGRES_USER" -c "create database task_manager"'
+```
+
+Then verify all pods status in `fibonacci` namespace:
+```
+$ microk8s kubectl -n fibonacci get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+front-67fcf8cbdd-hvmlr      1/1     Running   0          3m36s
+front-67fcf8cbdd-thz7g      1/1     Running   0          3m36s
+amq-7cd79647d4-6s4r5        1/1     Running   0          3m36s
+worker-66947dc44c-d9jtr     1/1     Running   0          3m35s
+worker-66947dc44c-sj5xc     1/1     Running   0          3m35s
+worker-66947dc44c-dv89r     1/1     Running   0          3m35s
+pgadmin-7b5c945d8f-27n7j    1/1     Running   0          3m36s
+postgres-64ccbdf9b4-dqqjw   1/1     Running   0          3m36s
+manager-9c95f4c64-8fpf8     1/1     Running   5          3m36s
+manager-9c95f4c64-f556t     1/1     Running   5          3m36s
+```
+
+5. Now the services are available on cluster ip:
+
+- `http://10.0.0.1` - the Fibonacci app
+- `http://10.0.0.1:31000` - the PG admin portal (user: postgres, password: qwerty)
+- `http://10.0.0.1:31001` - the Active MQ console (user: admin, password:admin)
