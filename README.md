@@ -106,5 +106,5 @@ manager-9c95f4c64-f556t     1/1     Running   5          3m36s
 5. Now the services are available on cluster ip:
 
 - [http://10.0.0.1](http://10.0.0.1) - the Fibonacci app
-- [http://10.0.0.1:31000](http://10.0.0.1:31000)` - the PG admin portal (user: postgres, password: qwerty)
-- `[http://10.0.0.1:31001](http://10.0.0.1:31001)` - the Active MQ console (user: admin, password:admin)
+- [http://10.0.0.1:31000](http://10.0.0.1:31000) - the PG admin portal (user: postgres, password: qwerty)
+- [http://10.0.0.1:31001](http://10.0.0.1:31001) - the Active MQ console (user: admin, password:admin)
