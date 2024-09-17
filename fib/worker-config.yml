@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: golenski/fibonacci-worker:1.1
+        image: golenski/fibonacci-worker:1.3.0
         resources:
           limits:
             memory: "300Mi"
@@ -23,9 +23,9 @@ spec:
         - containerPort: 8080
         envFrom:
           - secretRef:
-              name: amq-secret
+              name: artemis-secret
           - configMapRef:
-              name: amq-env
+              name: artemis-env
           - configMapRef:
               name: worker-env
         livenessProbe:

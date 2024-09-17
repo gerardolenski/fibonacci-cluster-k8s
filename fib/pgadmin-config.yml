@@ -33,7 +33,7 @@ spec:
               claimName: pgadmin-pvc
       containers:
       - name: pgadmin
-        image: dpage/pgadmin4:4.25
+        image: dpage/pgadmin4:8.4
         resources:
           limits:
             memory: "2Gi"

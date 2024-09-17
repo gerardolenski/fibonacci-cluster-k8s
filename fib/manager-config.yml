@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: manager
-        image: golenski/fibonacci-task-manager:1.1
+        image: golenski/fibonacci-task-manager:1.3.0
         resources:
           limits:
             memory: "700Mi"
@@ -37,11 +37,11 @@ spec:
         - secretRef:
             name: postgres-secret
         - secretRef:
-            name: amq-secret
+            name: artemis-secret
         - configMapRef:
             name: postgres-env
         - configMapRef:
-            name: amq-env
+            name: artemis-env
         - configMapRef:
             name: manager-env
         livenessProbe:
