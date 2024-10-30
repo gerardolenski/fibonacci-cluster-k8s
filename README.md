@@ -31,17 +31,20 @@ $ microk8s kubectl apply -f fib/
 Then verify all pods status in `fibonacci` namespace:
 ```
 $ microk8s kubectl -n fibonacci get pods
-NAME                        READY   STATUS    RESTARTS   AGE
-front-67fcf8cbdd-hvmlr      1/1     Running   0          3m36s
-front-67fcf8cbdd-thz7g      1/1     Running   0          3m36s
-artemis-7cd79647d4-6s4r5    1/1     Running   0          3m36s
-worker-66947dc44c-d9jtr     1/1     Running   0          3m35s
-worker-66947dc44c-sj5xc     1/1     Running   0          3m35s
-worker-66947dc44c-dv89r     1/1     Running   0          3m35s
-pgadmin-7b5c945d8f-27n7j    1/1     Running   0          3m36s
-postgres-64ccbdf9b4-dqqjw   1/1     Running   0          3m36s
-manager-9c95f4c64-8fpf8     1/1     Running   5          3m36s
-manager-9c95f4c64-f556t     1/1     Running   5          3m36s
+NAME                        READY   STATUS      RESTARTS        AGE
+artemis-57d94b6ccd-w8k2v    1/1     Running     0               12m
+db-init-job-8qsg2           0/1     Completed   0               12m
+front-575dcb58b6-kzkzh      1/1     Running     0               12m
+front-575dcb58b6-q828j      1/1     Running     0               12m
+manager-5dd5b645c4-nlxrx    1/1     Running     1 (11m ago)     12m
+manager-5dd5b645c4-z9t47    1/1     Running     0               12m
+pgadmin-677cf49c8b-r55bj    1/1     Running     0               12m
+postgres-84fdfbd988-fhp2l   1/1     Running     0               12m
+redis-f74cb74d5-hc8wh       1/1     Running     0               12m
+worker-557d8569b7-qdhh6     1/1     Running     3 (8m7s ago)    12m
+worker-557d8569b7-tx4q9     1/1     Running     3 (8m28s ago)   12m
+worker-557d8569b7-xsdqz     1/1     Running     4 (2m58s ago)   12m
+
 ```
 
 4. Now the services are available on cluster ip, e.g:
@@ -70,17 +73,19 @@ $ kubectl apply -f fib/
 Then verify all pods status in `fibonacci` namespace:
 ```
 $ kubectl -n fibonacci get pods
-NAME                       READY   STATUS    RESTARTS   AGE
-artemis-7cd79647d4-t5jgt   1/1     Running   0          2m24s
-front-67fcf8cbdd-4f7wx     1/1     Running   0          2m24s
-front-67fcf8cbdd-7chhs     1/1     Running   0          2m24s
-manager-8bc9bbcc7-2mv9v    1/1     Running   0          2m24s
-manager-8bc9bbcc7-s6tx9    1/1     Running   0          2m24s
-pgadmin-59b695468c-8h66p   1/1     Running   0          2m24s
-postgres-64489779b-bhmfk   1/1     Running   0          2m24s
-worker-65dfdcc58-4kqqz     1/1     Running   0          2m24s
-worker-65dfdcc58-86mzs     1/1     Running   0          2m24s
-worker-65dfdcc58-vnsz4     1/1     Running   0          2m24s
+NAME                        READY   STATUS      RESTARTS        AGE
+artemis-57d94b6ccd-w8k2v    1/1     Running     0               12m
+db-init-job-8qsg2           0/1     Completed   0               12m
+front-575dcb58b6-kzkzh      1/1     Running     0               12m
+front-575dcb58b6-q828j      1/1     Running     0               12m
+manager-5dd5b645c4-nlxrx    1/1     Running     1 (11m ago)     12m
+manager-5dd5b645c4-z9t47    1/1     Running     0               12m
+pgadmin-677cf49c8b-r55bj    1/1     Running     0               12m
+postgres-84fdfbd988-fhp2l   1/1     Running     0               12m
+redis-f74cb74d5-hc8wh       1/1     Running     0               12m
+worker-557d8569b7-qdhh6     1/1     Running     3 (8m7s ago)    12m
+worker-557d8569b7-tx4q9     1/1     Running     3 (8m28s ago)   12m
+worker-557d8569b7-xsdqz     1/1     Running     4 (2m58s ago)   12m
 ```
 
 4. Now the services are available on cluster ip, e.g:
