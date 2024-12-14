@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msg-relay
+  namespace: fibonacci
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msg-relay
+  template:
+    metadata:
+      labels:
+        app: msg-relay
+    spec:
+      containers:
+        - name: msg-relay
+          image: golenski/fibonacci-msg-relay:1.0.0
+          resources:
+            limits:
+              memory: "300Mi"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: artemis-secret
+            - secretRef:
+                name: postgres-secret
+            - configMapRef:
+                name: artemis-env
+            - configMapRef:
+                name: postgres-env
+            - configMapRef:
+                name: relay-env
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3

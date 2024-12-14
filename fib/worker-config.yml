@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: golenski/fibonacci-worker:1.4.0
+        image: golenski/fibonacci-worker:2.0.0
         resources:
           limits:
             memory: "300Mi"

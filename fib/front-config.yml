@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: front
-        image: golenski/fibonacci-front:1.1
+        image: golenski/fibonacci-front:2.0.0
         resources:
           limits:
             memory: "512Mi"

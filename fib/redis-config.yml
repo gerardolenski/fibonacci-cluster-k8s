@@ -26,6 +26,10 @@ spec:
       labels:
         app: redis
     spec:
+      volumes:
+        - name: redis-storage
+          persistentVolumeClaim:
+            claimName: redis-pvc
       containers:
       - name: redis
         image: redis:7.4.1
@@ -34,3 +38,6 @@ spec:
             memory: "2Gi"
         ports:
         - containerPort: 6379
+        volumeMounts:
+          - mountPath: /data
+            name: redis-storage

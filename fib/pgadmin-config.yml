@@ -42,7 +42,6 @@ spec:
         volumeMounts:
           - mountPath: /var/lib/pgadmin
             name: pgadmin-storage
-            subPath: postgres
         envFrom:
           - secretRef:
               name: pgadmin-secret

@@ -40,6 +40,10 @@ spec:
       labels:
         app: artemis
     spec:
+      volumes:
+        - name: artemis-storage
+          persistentVolumeClaim:
+            claimName: artemis-pvc
       containers:
       - name: artemis
         image: apache/activemq-artemis:2.37.0
@@ -49,3 +53,6 @@ spec:
         ports:
         - containerPort: 61616
         - containerPort: 8161
+        volumeMounts:
+          - mountPath: /var/lib/artemis-instance
+            name: artemis-storage

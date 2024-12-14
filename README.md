@@ -20,7 +20,6 @@ $ mickrok8s start
 $ microk8s enable ingress
 $ microk8s enable storage
 $ microk8s enable dns
-$ microk8s enable host-access
 ```
 
 3. Deploy all objects located in `fib` directory to k8s cluster ()

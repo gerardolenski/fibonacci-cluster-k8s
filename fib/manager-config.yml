@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: manager
-        image: golenski/fibonacci-task-manager:1.3.0
+        image: golenski/fibonacci-task-manager:2.0.0
         resources:
           limits:
             memory: "700Mi"
